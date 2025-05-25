@@ -7,12 +7,7 @@ router = APIRouter(prefix="/moderate", tags=["Moderation"])
 
 @router.post("", response_model=ModerationResult)
 async def moderate_image(
-    file: UploadFile = File(...),
-    token: str = Depends(get_current_token)
+    file: UploadFile = File(...), token: str = Depends(get_current_token)
 ):
     # Placeholder for actual moderation logic
-    return {
-        "is_safe": True,
-        "categories": {},
-        "confidence": 0.95
-    }
+    return {"is_safe": True, "categories": {}, "confidence": 0.95}

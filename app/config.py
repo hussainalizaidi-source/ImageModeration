@@ -19,10 +19,8 @@ class Settings(BaseSettings):
             f"mongodb://{username}:{password}@{self.MONGO_HOST}:"
             f"{self.MONGO_PORT}/{self.MONGO_DB}?authSource={self.AUTH_SOURCE}"
         )
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        env_file_encoding="utf-8"
-    )
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 
 settings = Settings()

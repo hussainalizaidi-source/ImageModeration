@@ -10,9 +10,11 @@ class TrackUsageMiddleware(BaseHTTPMiddleware):
         if "authorization" in request.headers:
             token = request.headers["authorization"].split("Bearer ")[-1]
             db = await get_db()
-            await db.usages.insert_one({
-                "token": token,
-                "endpoint": request.url.path,
-                "timestamp": datetime.utcnow()
-            })
+            await db.usages.insert_one(
+                {
+                    "token": token,
+                    "endpoint": request.url.path,
+                    "timestamp": datetime.utcnow(),
+                }
+            )
         return response
