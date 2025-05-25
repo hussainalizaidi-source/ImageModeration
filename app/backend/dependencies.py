@@ -6,9 +6,10 @@ from app.database.connection import get_db
 
 security = HTTPBearer()
 
+
 async def get_current_token(
     credentials: HTTPAuthorizationCredentials = Depends(security),
-    db = Depends(get_db)
+    db=Depends(get_db)
 ):
     token = credentials.credentials
     if not await TokenCRUD.token_exists(db, token):
@@ -23,9 +24,10 @@ async def get_current_token(
     )
     return token
 
+
 async def require_admin(
     token: str = Depends(get_current_token),
-    db = Depends(get_db)
+    db=Depends(get_db)
 ):
     if not await TokenCRUD.is_admin(db, token):
         raise HTTPException(

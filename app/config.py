@@ -1,5 +1,6 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
 from urllib.parse import quote_plus
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
 
 class Settings(BaseSettings):
     MONGO_USER: str
@@ -14,11 +15,14 @@ class Settings(BaseSettings):
         # URL-encode credentials
         username = quote_plus(self.MONGO_USER)
         password = quote_plus(self.MONGO_PASS)
-        return f"mongodb://{username}:{password}@{self.MONGO_HOST}:{self.MONGO_PORT}/{self.MONGO_DB}?authSource={self.AUTH_SOURCE}"
-
+        return (
+            f"mongodb://{username}:{password}@{self.MONGO_HOST}:"
+            f"{self.MONGO_PORT}/{self.MONGO_DB}?authSource={self.AUTH_SOURCE}"
+        )
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8"
     )
+
 
 settings = Settings()

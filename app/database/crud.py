@@ -1,6 +1,7 @@
 from app.database.models import TokenInDB
 import secrets
 
+
 class TokenCRUD:
     @staticmethod
     async def create_token(db, is_admin: bool):
