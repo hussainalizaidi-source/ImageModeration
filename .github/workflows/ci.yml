@@ -31,7 +31,7 @@ jobs:
       - name: Run Type Checking 
         run: |
           pip install mypy
-          mypy .
+          mypy --explicit-package-base .
 
       - name: Run Tests 
         run: |
