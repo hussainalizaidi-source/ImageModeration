@@ -3,12 +3,12 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    MONGO_USER: str
-    MONGO_PASS: str
-    MONGO_HOST: str
-    MONGO_PORT: int
-    MONGO_DB: str
-    AUTH_SOURCE: str
+    MONGO_USER: str = "your_user"
+    MONGO_PASS: str = "your_pass"
+    MONGO_HOST: str = "localhost"
+    MONGO_PORT: int = 27017
+    MONGO_DB: str = "your_db"
+    AUTH_SOURCE: str = "admin"
 
     @property
     def MONGODB_URI(self):

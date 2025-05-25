@@ -19,7 +19,7 @@ async def get_current_token(
         )
     # Update last used timestamp
     await db.tokens.update_one(
-        {"token": token}, {"$set": {"last_used": datetime.now(timezone.now)}}
+        {"token": token}, {"$set": {"last_used": datetime.now(timezone.utc)}}
     )
     return token
 
