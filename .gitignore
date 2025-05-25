@@ -5,5 +5,3 @@ __pycache__/
 .venv/
 venv/
 
-# Docker
-docker-compose.override.yml
