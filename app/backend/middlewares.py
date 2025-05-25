@@ -1,5 +1,5 @@
 from fastapi import Request
-from datetime import datetime
+from datetime import datetime, timezone
 from starlette.middleware.base import BaseHTTPMiddleware
 from app.database.connection import get_db
 
@@ -14,7 +14,7 @@ class TrackUsageMiddleware(BaseHTTPMiddleware):
                 {
                     "token": token,
                     "endpoint": request.url.path,
-                    "timestamp": datetime.utcnow(),
+                    "timestamp": datetime.now(timezone.utc),
                 }
             )
         return response
