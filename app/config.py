@@ -9,6 +9,7 @@ class Settings(BaseSettings):
     MONGO_PORT: int = 27017
     MONGO_DB: str = "your_db"
     AUTH_SOURCE: str = "admin"
+    HIVE_API_KEY: str = "your_hive_api_key"
 
     @property
     def MONGODB_URI(self):

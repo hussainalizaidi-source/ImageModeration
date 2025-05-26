@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from app.database.connection import get_db
 from app.backend.middlewares import TrackUsageMiddleware
-from app.backend.routers import auth
+from app.backend.routers import auth, moderator
 
 
 @asynccontextmanager
@@ -21,4 +21,5 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(auth.router)
+app.include_router(moderator.router)
 app.add_middleware(TrackUsageMiddleware)
