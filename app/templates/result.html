@@ -1,0 +1,34 @@
+<div class="box">
+    <h3 class="title is-5">Moderation Results</h3>
+    
+    <div class="notification is-{{ 'success' if result.is_safe else 'danger' }}">
+        Image is {{ 'SAFE' if result.is_safe else 'UNSAFE' }}
+        <span class="has-text-weight-bold">
+            (Confidence: {{ "%.2f"|format(result.confidence * 100) }}%)
+        </span>
+    </div>
+
+    <div class="content">
+        <h4 class="title is-6">Detailed Analysis:</h4>
+        <table class="table is-fullwidth">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Confidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category, score in result.categories.items() %}
+                <tr>
+                    <td>{{ category }}</td>
+                    <td>
+                        <progress class="progress is-{{ 'danger' if score >= SAFETY_THRESHOLDS.get(category, 1) else 'info' }}" 
+                                  value="{{ score }}" max="1"></progress>
+                        {{ "%.2f"|format(score * 100) }}%
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="box">
+    <form hx-post="/auth/tokens" 
+          hx-headers='{"Authorization": "{{ request.cookies.get("access_token") }}"}'
+          hx-target="#token-generation-section">
+        <input type="hidden" name="is_admin" value="false">
+        <div class="field">
+            <label class="checkbox">
+                <input type="checkbox" name="is_admin" value="true">
+                Grant Admin Privileges
+            </label>
+        </div>
+        <div class="field">
+            <button class="button is-success" type="submit">
+                Generate Token
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

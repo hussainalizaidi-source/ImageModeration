@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="notification is-danger">
+    <button class="delete" 
+            hx-post="/auth/logout" 
+            hx-target="closest .notification"></button>
+    {{ error }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="box" hx-boost="true">
+    <h1 class="title is-4">Image Moderation Portal</h1>
+    
+    <!-- Login Form -->
+    <div class="block">
+        <form hx-post="/auth/login" hx-target="#auth-section">
+            <div class="field">
+                <label class="label">API Token</label>
+                <div class="control has-icons-right">
+                    <input class="input" type="text" name="token" 
+                           placeholder="Enter your API token" required>
+                    <span class="icon is-right">
+                        <i class="fas fa-key"></i>
+                    </span>
+                </div>
+            </div>
+            <!-- <div class="field is-grouped"> -->
+                <div class="control">
+                    <button class="button is-primary" type="submit">
+                        Authenticate
+                    </button>
+                </div>
+                <!-- <div class="control">
+                    <button class="button is-info" 
+                            hx-get="/auth/tokens/new" 
+                            hx-target="#token-generation-section">
+                        Generate New Token
+                    </button>
+                </div> -->
+            <!-- </div> -->
+        </form>
+    </div>
+
+    <!-- Token Generation Section -->
+    <div id="token-generation-section" class="mt-4"></div>
+    
+    <!-- Auth Status -->
+    <div id="auth-section"></div>
+</div>
+{% endblock %}
