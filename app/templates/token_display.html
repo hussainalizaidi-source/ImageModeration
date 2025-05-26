@@ -1,0 +1,20 @@
+<div class="notification is-success" id="token-notification">
+    <div class="is-flex is-justify-content-space-between">
+        <span>New Token: <strong>{{ token }}</strong></span>
+        <button class="button is-small" 
+                onclick="copyToken('{{ token }}')"
+                _="on click add .is-success then wait 2s then remove .is-success">
+            Copy
+        </button>
+    </div>
+</div>
+
+<script>
+function copyToken(token) {
+    navigator.clipboard.writeText(token).then(() => {
+        const notification = document.getElementById('token-notification');
+        notification.classList.add('is-success');
+        setTimeout(() => notification.classList.remove('is-success'), 2000);
+    });
+}
+</script>

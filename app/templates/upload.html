@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="box">
+    <h2 class="title is-5">Upload Image for Moderation</h2>
+    
+    <form hx-post="/moderate-ui" 
+          hx-encoding="multipart/form-data" 
+          hx-target="#result"
+          hx-headers='{"Authorization": "{{ request.cookies.get("access_token") }}"}'>
+        <div class="box mt-5">
+            <h2 class="title is-5">Admin Tools</h2>
+            <button class="button is-warning" 
+                    hx-get="/auth/tokens/new"
+                    hx-target="#token-generation-section">
+                Generate New API Token
+            </button>
+            <div id="token-generation-section" class="mt-3"></div>
+        </div>
+        <div class="field">
+            <div class="file has-name is-boxed">
+                <label class="file-label">
+                    <input class="file-input" type="file" name="file" accept="image/*" required
+                           onchange="previewImage(event)">
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                            Choose image...
+                        </span>
+                    </span>
+                    <span class="file-name"></span>
+                </label>
+            </div>
+            
+            <!-- Image preview -->
+            <!-- <div class="mt-3" id="image-preview" style="display: none;">
+                <figure class="image is-256x256">
+                    <img id="preview" class="is-rounded" alt="Selected image">
+                </figure>
+            </div> -->
+        </div>
+        
+        <div class="field">
+            <button class="button is-info is-fullwidth" type="submit">
+                Analyze Image
+            </button>
+        </div>
+    </form>
+    
+    <div id="result" class="mt-4"></div>
+</div>
+
+<script>
+function previewImage(event) {
+    const input = event.target;
+    const previewContainer = document.getElementById('image-preview');
+    const preview = document.getElementById('preview');
+    const fileName = document.querySelector('.file-name');
+    
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            previewContainer.style.display = 'block';
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+        fileName.textContent = input.files[0].name;
+    }
+}
+document.getElementById('upload-form').addEventListener('htmx:afterRequest', function(evt) {
+    if(evt.detail.successful) {
+        // Reset form and preview
+        this.reset();
+        document.getElementById('image-preview').style.display = 'none';
+        document.getElementById('preview').src = '';
+    }
+});
+</script>
+{% endblock %}
