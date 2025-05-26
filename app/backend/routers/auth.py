@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
-from app.database.models import TokenCreate, TokenResponse
+from app.database.models import TokenCreate, TokenResponse, UsageRecord
 from app.database.crud import TokenCRUD
 from app.backend.dependencies import require_admin
 from app.database.connection import get_db
@@ -45,3 +45,13 @@ async def revoke_token(
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Token not found")
     return {"message": "Token revoked successfully"}
+
+
+@router.get("/usages/{token}", response_model=list[UsageRecord])
+async def get_usage(
+    token: str,
+    admin: dict = Depends(require_admin),
+    db=Depends(get_db)
+):
+    cursor = db.usages.find({"token": token})
+    return [UsageRecord(**doc) async for doc in cursor]
